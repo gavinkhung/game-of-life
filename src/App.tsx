@@ -4,19 +4,19 @@ interface AppProps {}
 
 const X = 20;
 const Y = 25;
-const neighboringCells:number[][] = [
+const neighboringCells: number[][] = [
   [-1, 1],
   [0, 1],
   [1, 1],
   [-1, 0],
   [1, 0],
-  [-1, -1],
+  [1, -1],
   [0, -1],
   [-1, -1],
 ];
 
 const App: FC<AppProps> = ({}) => {
-  const [isActive, setIsActive] = useState<boolean>(false);
+  const [isActive, setIsActive] = useState<boolean>(true);
 
   const [grid, setGrid] = useState<boolean[][]>(() => {
     const rows: boolean[][] = [];
@@ -31,21 +31,20 @@ const App: FC<AppProps> = ({}) => {
   });
 
   useEffect(() => {
-    let interval: number | undefined;
-    if (isActive) {
-      interval = setInterval(() => {
+    let interval: number | undefined = setInterval(() => {
+      if (isActive) {
         const rows: boolean[][] = [];
         for (let i = 0; i < Y; i++) {
           const col: boolean[] = [];
           for (let j = 0; j < X; j++) {
             let neighbors = 0;
 
-            for(let k=0; k<neighboringCells.length; k++){
-              const i2:number = i+neighboringCells[k][0];
-              const j2: number = j+neighboringCells[k][1];
-              
-              if(i2>=0 && i2<X && j2>=0 && j2<Y){
-                if(grid[i2][j2]){
+            for (let k = 0; k < neighboringCells.length; k++) {
+              const i2: number = i + neighboringCells[k][0];
+              const j2: number = j + neighboringCells[k][1];
+              if (i2 >= 0 && i2 < X && j2 >= 0 && j2 < Y) {
+                console.log({ i, j, i2, j2 });
+                if (grid[i2][j2]) {
                   neighbors++;
                 }
               }
@@ -67,11 +66,11 @@ const App: FC<AppProps> = ({}) => {
           }
           rows.push(col);
         }
-
         setGrid(rows);
-      }, 1000);
-    }
-    () => clearInterval(interval);
+        console.log("updated");
+      }
+    }, 1000);
+    return () => clearInterval(interval);
   }, [isActive, grid]);
 
   const toggleCell = (i2: number, j2: number, val: boolean) => {
@@ -103,8 +102,8 @@ const App: FC<AppProps> = ({}) => {
           <div className="flex">
             {row.map((col, j) => (
               <div
-                className={`flex-1 border transition ease-in ${
-                  col ? "bg-green-500" : "bg-red-500"
+                className={`flex-1 border transition duration-300 ease-in ${
+                  col ? "bg-gray-500" : "bg-white"
                 }`}
                 onClick={() => toggleCell(i, j, col)}
               >
