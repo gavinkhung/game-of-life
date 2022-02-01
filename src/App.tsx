@@ -2,8 +2,8 @@ import React, { FC, useState, useEffect } from "react";
 
 interface AppProps {}
 
-const X = 20;
-const Y = 25;
+const X = 80;
+const Y = 40;
 const neighboringCells: number[][] = [
   [-1, 1],
   [0, 1],
@@ -42,8 +42,7 @@ const App: FC<AppProps> = ({}) => {
             for (let k = 0; k < neighboringCells.length; k++) {
               const i2: number = i + neighboringCells[k][0];
               const j2: number = j + neighboringCells[k][1];
-              if (i2 >= 0 && i2 < X && j2 >= 0 && j2 < Y) {
-                console.log({ i, j, i2, j2 });
+              if (i2 >= 0 && i2 < Y && j2 >= 0 && j2 < X) {
                 if (grid[i2][j2]) {
                   neighbors++;
                 }
@@ -67,13 +66,12 @@ const App: FC<AppProps> = ({}) => {
           rows.push(col);
         }
         setGrid(rows);
-        console.log("updated");
       }
     }, 1000);
     return () => clearInterval(interval);
   }, [isActive, grid]);
 
-  const toggleCell = (i2: number, j2: number, val: boolean) => {
+  const toggleCell = (i2: number, j2: number, val: boolean): void => {
     const newGrid: boolean[][] = [];
     for (let i = 0; i < Y; i++) {
       const col: boolean[] = [];
@@ -81,12 +79,7 @@ const App: FC<AppProps> = ({}) => {
         if (i == i2 && j == j2) {
           col.push(!val);
         } else {
-          if (grid[i][j]) {
-            col.push(true);
-          } else {
-            col.push(false);
-          }
-          // col.push(grid[i][j]);
+          col.push(grid[i][j]);
         }
       }
       newGrid.push(col);
@@ -95,26 +88,29 @@ const App: FC<AppProps> = ({}) => {
   };
 
   return (
-    <div>
-      <button onClick={() => setIsActive(!isActive)}>toggle</button>
+    <>
+      <div className="">
+        <h1>Conway's Game of Life</h1>
+      </div>
       <div className="">
         {grid.map((row, i) => (
           <div className="flex">
             {row.map((col, j) => (
               <div
-                className={`flex-1 border transition duration-300 ease-in ${
-                  col ? "bg-gray-500" : "bg-white"
-                }`}
+                className={`border w-4 h-4 ${col ? "bg-gray-500" : "bg-white"}`}
                 onClick={() => toggleCell(i, j, col)}
               >
                 {/* {`${i} ${j} ${col}`} */}
-                {"_"}
+                {""}
               </div>
             ))}
           </div>
         ))}
       </div>
-    </div>
+      <div className="">
+        <button onClick={() => setIsActive(!isActive)}>toggle</button>
+      </div>
+    </>
   );
 };
 
