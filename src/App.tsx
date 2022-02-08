@@ -2,7 +2,7 @@ import React, { FC, useState, useEffect } from "react";
 
 interface AppProps {}
 
-const X = 80;
+const X = 40;
 const Y = 40;
 const neighboringCells: number[][] = [
   [-1, 1],
@@ -88,29 +88,61 @@ const App: FC<AppProps> = ({}) => {
   };
 
   return (
-    <>
-      <div className="">
-        <h1>Conway's Game of Life</h1>
+    <div className="flex flex-col w-screen h-screen overflow-hidden p-6">
+      <div className="pb-4">
+        <h1 className="pb-2 text-4xl lg:text-5xl font-bold leading-tight">
+          Conway's Game of Life
+        </h1>
       </div>
-      <div className="">
-        {grid.map((row, i) => (
-          <div className="flex">
-            {row.map((col, j) => (
-              <div
-                className={`border w-4 h-4 ${col ? "bg-gray-500" : "bg-white"}`}
-                onClick={() => toggleCell(i, j, col)}
-              >
-                {/* {`${i} ${j} ${col}`} */}
-                {""}
+      <div className="flex flex-row">
+        <div className="flex-1 space-y-2">
+          <div className="">
+            <h2 className="py-2 text-2xl lg:text-3xl font-medium leading-tight">
+              About
+            </h2>
+            <p className="text-lg lg:text-xl font-normal leading-tight">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis,
+              doloribus!
+            </p>
+          </div>
+          <div className="">
+            <h2 className="py-2 text-2xl lg:text-3xl font-medium leading-tight">
+              About
+            </h2>
+            <p className="text-lg lg:text-xl font-normal leading-tight">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis,
+              doloribus!
+            </p>
+          </div>
+          <button
+            onClick={() => {
+              setIsActive(!isActive);
+              console.log(grid);
+            }}
+          >
+            toggle
+          </button>
+        </div>
+        <div className="flex-1 flex justify-center items-center">
+          <div className="">
+            {grid.map((row, i) => (
+              <div className="flex">
+                {row.map((col, j) => (
+                  <div
+                    className={`border w-4 h-4 ${
+                      col ? "bg-gray-800" : "bg-white"
+                    }`}
+                    onClick={() => toggleCell(i, j, col)}
+                  >
+                    {""}
+                  </div>
+                ))}
               </div>
             ))}
           </div>
-        ))}
+        </div>
       </div>
-      <div className="">
-        <button onClick={() => setIsActive(!isActive)}>toggle</button>
-      </div>
-    </>
+    </div>
   );
 };
 
