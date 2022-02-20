@@ -1,4 +1,5 @@
 import React, { FC, useState, useEffect } from "react";
+import patterns from "./patterns";
 
 interface AppProps {}
 
@@ -67,9 +68,27 @@ const App: FC<AppProps> = ({}) => {
         }
         setGrid(rows);
       }
-    }, 1000);
+    }, 100);
     return () => clearInterval(interval);
   }, [isActive, grid]);
+
+  const setPattern = (name: string): void => {
+    if (name.length && patterns[name].length) {
+      const rows: boolean[][] = [];
+      for (let i = 0; i < Y; i++) {
+        const col: boolean[] = [];
+        for (let j = 0; j < X; j++) {
+          if (patterns[name][i][j]) {
+            col.push(true);
+          } else {
+            col.push(false);
+          }
+        }
+        rows.push(col);
+      }
+      setGrid(rows);
+    }
+  };
 
   const toggleCell = (i2: number, j2: number, val: boolean): void => {
     const newGrid: boolean[][] = [];
@@ -89,39 +108,87 @@ const App: FC<AppProps> = ({}) => {
 
   return (
     <div className="flex flex-col w-screen h-screen overflow-hidden p-6">
-      <div className="pb-4">
-        <h1 className="pb-2 text-4xl lg:text-5xl font-bold leading-tight">
+      <div className="">
+        <h1 className="pb-6 text-4xl lg:text-5xl font-bold leading-tight text-black">
           Conway's Game of Life
         </h1>
       </div>
-      <div className="flex flex-row">
-        <div className="flex-1 space-y-2">
-          <div className="">
-            <h2 className="py-2 text-2xl lg:text-3xl font-medium leading-tight">
+      <div className="flex flex-col md:flex-row">
+        <div className="flex-1 space-y-6">
+          <div className="space-y-2">
+            <h2 className="pb-1 text-2xl lg:text-3xl font-medium leading-tight text-black">
               About
             </h2>
-            <p className="text-lg lg:text-xl font-normal leading-tight">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis,
-              doloribus!
+            <p className="text-lg lg:text-xl font-normal leading-tight text-gray-800">
+              This is a zero-player game that models underpopulation,
+              overpopulation, and reproduction using a grid of cells. The cells
+              are either alive or dead. The state of each cell is determined by
+              the states of its neighbours.
             </p>
           </div>
-          <div className="">
-            <h2 className="py-2 text-2xl lg:text-3xl font-medium leading-tight">
-              About
+          <div className="space-y-2">
+            <h2 className="pb-1 text-2xl lg:text-3xl font-medium leading-tight text-black">
+              Rules
             </h2>
-            <p className="text-lg lg:text-xl font-normal leading-tight">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis,
-              doloribus!
-            </p>
+            <ul className="list-disc list-inside">
+              <li className="text-lg lg:text-xl font-normal leading-tight text-gray-800">
+                Live cells with two or three cells survive.
+              </li>
+              <li className="text-lg lg:text-xl font-normal leading-tight text-gray-800">
+                Dead cells with three neighbors become alive.
+              </li>
+              <li className="text-lg lg:text-xl font-normal leading-tight text-gray-800">
+                Any other live cells die. Any other dead cell stays dead
+              </li>
+            </ul>
           </div>
-          <button
-            onClick={() => {
-              setIsActive(!isActive);
-              console.log(grid);
-            }}
-          >
-            toggle
-          </button>
+          <div className="space-y-2">
+            <h2 className="pb-1 text-2xl lg:text-3xl font-medium leading-tight text-black">
+              Options
+            </h2>
+            <div className="flex flex-row space-x-2">
+              <button
+                className="text-lg py-2 px-4 rounded-md bg-gray-200 hover:shadow-sm font-normal leading-tight text-gray-800 hover:text-gray-900"
+                onClick={() => {
+                  setIsActive(!isActive);
+                  console.log(grid);
+                }}
+              >
+                Toggle {isActive ? "Off" : "On"}
+              </button>
+              <button
+                className="text-lg py-2 px-4 rounded-md bg-gray-200 hover:shadow-sm font-normal leading-tight text-gray-800 hover:text-gray-900"
+                onClick={() => {
+                  setPattern("clear");
+                }}
+              >
+                Clear
+              </button>
+            </div>
+          </div>
+          <div className="space-y-2">
+            <h2 className="pb-1 text-2xl lg:text-3xl font-medium leading-tight text-black">
+              Patterns
+            </h2>
+            <div className="flex flex-row space-x-2">
+              <button
+                className="text-lg py-2 px-4 rounded-md bg-gray-200 hover:shadow-sm font-normal leading-tight text-gray-800 hover:text-gray-900"
+                onClick={() => {
+                  setPattern("glider");
+                }}
+              >
+                Gosper Glider Gun
+              </button>
+              <button
+                className="text-lg py-2 px-4 rounded-md bg-gray-200 hover:shadow-sm font-normal leading-tight text-gray-800 hover:text-gray-900"
+                onClick={() => {
+                  setPattern("pulse");
+                }}
+              >
+                Pulse
+              </button>
+            </div>
+          </div>
         </div>
         <div className="flex-1 flex justify-center items-center">
           <div className="">
@@ -130,7 +197,7 @@ const App: FC<AppProps> = ({}) => {
                 {row.map((col, j) => (
                   <div
                     className={`border w-4 h-4 ${
-                      col ? "bg-gray-800" : "bg-white"
+                      col ? "bg-blue-800 opacity-50" : "bg-white"
                     }`}
                     onClick={() => toggleCell(i, j, col)}
                   >
