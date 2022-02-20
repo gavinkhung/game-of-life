@@ -113,7 +113,7 @@ const App: FC<AppProps> = ({}) => {
           Conway's Game of Life
         </h1>
       </div>
-      <div className="flex flex-col md:flex-row">
+      <div className="flex flex-col md:flex-row space-y-4 md:space-y-0">
         <div className="flex-1 space-y-6">
           <div className="space-y-2">
             <h2 className="pb-1 text-2xl lg:text-3xl font-medium leading-tight text-black">
@@ -123,7 +123,7 @@ const App: FC<AppProps> = ({}) => {
               This is a zero-player game that models underpopulation,
               overpopulation, and reproduction using a grid of cells. The cells
               are either alive or dead. The state of each cell is determined by
-              the states of its neighbours.
+              the states of its neighbors.
             </p>
           </div>
           <div className="space-y-2">
