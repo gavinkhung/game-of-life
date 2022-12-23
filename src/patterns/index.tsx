@@ -1,6 +1,6 @@
+import clear from "./clear.json";
 import glider from "./glider.json";
 import pulse from "./pulse.json";
-import clear from "./clear.json";
 
 interface patternType {
   [key: string]: boolean[][];

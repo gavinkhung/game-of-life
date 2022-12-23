@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import patterns from "./patterns";
 
 interface AppProps {}
@@ -24,7 +24,11 @@ const App: FC<AppProps> = ({}) => {
     for (let i = 0; i < Y; i++) {
       const col: boolean[] = [];
       for (let j = 0; j < X; j++) {
-        col.push(false);
+        if (patterns["glider"][i][j]) {
+          col.push(true);
+        } else {
+          col.push(false);
+        }
       }
       rows.push(col);
     }
