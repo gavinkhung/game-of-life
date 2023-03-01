@@ -111,7 +111,7 @@ const App: FC<AppProps> = ({}) => {
   };
 
   return (
-    <div className="flex flex-col w-screen h-screen overflow-hidden p-6">
+    <div className="flex flex-col w-screen h-screen p-6">
       <div className="">
         <h1 className="pb-6 text-4xl lg:text-5xl font-bold leading-tight text-black">
           Conway's Game of Life
