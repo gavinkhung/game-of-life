@@ -39,7 +39,7 @@ Navigate to the following URL: [http://localhost:80](http://localhost:80)
 Start the Docker image
 
 ```bash
-docker compose up dev --build -d
+docker compose up serve --build -d
 ```
 
 Navigate to the following URL: [http://localhost:80](http://localhost:80)
@@ -56,3 +56,14 @@ Build the service
 docker compose up node-build --build -d
 docker compose down --volumes --rmi local
 ```
+
+### Development with Docker Compose
+
+Start the service with hot reload enabled
+
+```bash
+docker compose up dev --build -d
+docker compose down --volumes --rmi local
+```
+
+Make edits and navigate to the following URL: [http://localhost:80](http://localhost:80)

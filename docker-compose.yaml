@@ -1,10 +1,21 @@
 services:
-  dev:
+  serve:
     build: .
     container_name: game-of-life
     command: ["nginx", "-g", "daemon off;"]
     ports:
       - 80:80
+    volumes:
+      - .:/app
+
+  dev:
+    image: node:18-alpine3.17
+    working_dir: /app
+    container_name: game-of-life
+    command: >
+      sh -c "npm install && npm run dev"
+    ports:
+      - 5173:5173
     volumes:
       - .:/app
 
