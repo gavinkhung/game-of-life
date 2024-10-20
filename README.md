@@ -62,8 +62,8 @@ docker compose down --volumes --rmi local
 Start the service with hot reload enabled
 
 ```bash
-docker compose up dev --build -d
+docker compose up dev --watch --build
 docker compose down --volumes --rmi local
 ```
 
-Make edits and navigate to the following URL: [http://localhost:80](http://localhost:80)
+Make edits and navigate to the following URL: [http://localhost:5173](http://localhost:5173)
