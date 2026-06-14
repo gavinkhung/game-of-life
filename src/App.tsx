@@ -11,70 +11,51 @@ const App: FC = () => {
 
   return (
     <div className="flex flex-col w-screen h-screen p-6">
-      <div>
-        <h1 className="pb-6 text-4xl lg:text-5xl font-bold leading-tight text-black">
-          Conway's Game of Life
-        </h1>
-      </div>
-      <div className="flex flex-col md:flex-row space-y-4 md:space-y-0">
-        <div className="flex-1 space-y-6">
-          <div className="space-y-2">
-            <h2 className="pb-1 text-2xl lg:text-3xl font-medium leading-tight text-black">
-              About
-            </h2>
-            <p className="text-lg lg:text-xl font-normal leading-tight text-gray-800">
-              This is a zero-player game that models underpopulation,
-              overpopulation, and reproduction using a grid of cells. The cells
-              are either alive or dead. The state of each cell is determined by
-              the states of its neighbors.
-            </p>
+      <div className="flex flex-col md:flex-row space-y-4">
+        <article className="prose prose-gray lg:prose-md max-w-none flex-1">
+          <h1>Conway's Game of Life</h1>
+
+          <h3>About</h3>
+          <p>
+            This is a zero-player game that models underpopulation,
+            overpopulation, and reproduction using a grid of cells. The cells
+            are either alive or dead. The state of each cell is determined by
+            the states of its neighbors.
+          </p>
+
+          <h3>Rules</h3>
+          <ul>
+            <li>Live cells with two or three cells survive.</li>
+            <li>Dead cells with three neighbors become alive.</li>
+            <li>
+              Any other live cells die. Any other dead cell stays dead
+            </li>
+          </ul>
+
+          <h3>Options</h3>
+          <div className="not-prose flex flex-row space-x-2">
+            <button className={buttonClass} onClick={toggleRunning}>
+              Toggle {isActive ? "Off" : "On"}
+            </button>
+            <button className={buttonClass} onClick={() => loadPattern("clear")}>
+              Clear
+            </button>
           </div>
-          <div className="space-y-2">
-            <h2 className="pb-1 text-2xl lg:text-3xl font-medium leading-tight text-black">
-              Rules
-            </h2>
-            <ul className="list-disc list-inside">
-              <li className="text-lg lg:text-xl font-normal leading-tight text-gray-800">
-                Live cells with two or three cells survive.
-              </li>
-              <li className="text-lg lg:text-xl font-normal leading-tight text-gray-800">
-                Dead cells with three neighbors become alive.
-              </li>
-              <li className="text-lg lg:text-xl font-normal leading-tight text-gray-800">
-                Any other live cells die. Any other dead cell stays dead
-              </li>
-            </ul>
+
+          <h2>Patterns</h2>
+          <div className="not-prose flex flex-row space-x-2">
+            <button
+              className={buttonClass}
+              onClick={() => loadPattern("glider")}
+            >
+              Gosper Glider Gun
+            </button>
+            <button className={buttonClass} onClick={() => loadPattern("pulse")}>
+              Pulse
+            </button>
           </div>
-          <div className="space-y-2">
-            <h2 className="pb-1 text-2xl lg:text-3xl font-medium leading-tight text-black">
-              Options
-            </h2>
-            <div className="flex flex-row space-x-2">
-              <button className={buttonClass} onClick={toggleRunning}>
-                Toggle {isActive ? "Off" : "On"}
-              </button>
-              <button className={buttonClass} onClick={() => loadPattern("clear")}>
-                Clear
-              </button>
-            </div>
-          </div>
-          <div className="space-y-2">
-            <h2 className="pb-1 text-2xl lg:text-3xl font-medium leading-tight text-black">
-              Patterns
-            </h2>
-            <div className="flex flex-row space-x-2">
-              <button
-                className={buttonClass}
-                onClick={() => loadPattern("glider")}
-              >
-                Gosper Glider Gun
-              </button>
-              <button className={buttonClass} onClick={() => loadPattern("pulse")}>
-                Pulse
-              </button>
-            </div>
-          </div>
-        </div>
+        </article>
+
         <div className="flex-1 flex justify-center items-center">
           <Grid grid={grid} onToggleCell={toggleCell} />
         </div>
